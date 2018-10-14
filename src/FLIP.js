@@ -22,8 +22,22 @@ function FLIP() {
     }
 
     function first(v) {
-        if (!flip.previous.children)
+        // On the very first pass (i.e. onbeforeupdate() is not invoked and previous.children is not set),
+        // call the enter() function to run animations
+        if (!flip.previous.children && v.children) {
+            v.children.forEach((it) => {
+                Object.assign(it.attrs, {}, {
+                    oncreate: vnodeChild => {
+                        let offsetHeight = vnodeChild.dom.offsetHeight
+                        const {enter} = v.attrs
+                        // Call the FLIP component's user defined enter() function with this child vnode.
+                        return enter.call(null, it, flip)
+                    }
+                })
+
+            })
             return
+        }
 
         // Here we create the flip.boundingClients map by key with:
         //   { <key>: {previous: {}}
