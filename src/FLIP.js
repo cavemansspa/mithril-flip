@@ -34,7 +34,7 @@ function FLIP() {
 
     function first(v) {
 
-        if(!isCreated) return
+        if (!isCreated) return
 
         // Here we create the flip.boundingClients map by key with:
         //   { <key>: {previous: {}}
@@ -167,5 +167,24 @@ FLIP.letterKeys = function letterMap(string) {
     }, {asList: []})
 
     return letterMap.asList
+
+}
+
+FLIP.delta = function (boundingClient1, boundingClient2) {
+
+    let deltaY = boundingClient1.top - boundingClient2.top,
+        deltaX = boundingClient1.left - boundingClient2.left
+
+    return (function() {
+        let me = {
+            deltaY: deltaY,
+            deltaX: deltaX,
+            isDiff: !(deltaY === 0 && deltaX === 0),
+            toTranslate3d: () => 'translate3d(' + me.deltaX + 'px, ' + me.deltaY + 'px, ' + '0px)'
+        }
+
+        return me;
+        
+    })();
 
 }
