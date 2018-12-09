@@ -24,7 +24,7 @@ determining when to call the corresponding `FLIP` callback based on each child's
 m(FLIP, {
     enter: (vnodeChild, flip) => doSomethingCoolOnEnter()  // called for each child created in this redraw
     move: (vnodeChild, flip) => doSomethingCoolOnMove()    // called for each child moving in this redraw
-    enter: (vnodeChild, flip) => doSomethingCoolOnExit()   // called for each child being removed in this redraw
+    exit: (vnodeChild, flip) => doSomethingCoolOnExit()   // called for each child being removed in this redraw
 }, [
     m('div', {key: 1}, 'hello'),
     m('div', {key: 2}, 'world')
